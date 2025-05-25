@@ -18,8 +18,8 @@ public class ProductService {
         this.modelMapper = modelMapper;
     }
 
-    List<ProductEntity> getProductList(String name) {
-        return productRepository.findByNameStartsWith(name);
+    List<ProductEntity> getProductList(ProductDTO dto) {
+        return productRepository.findByNameStartsWith(dto);
     }
 
 }

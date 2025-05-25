@@ -21,7 +21,9 @@ public class ProductController {
 
     @GetMapping("/products")
     public List<ProductDTO> listProducts(@RequestParam String name) throws Exception {
-        List<ProductEntity> products =  productService.getProductList(name);
+        ProductDTO dto = new ProductDTO();
+        dto.setName(name);
+        List<ProductEntity> products =  productService.getProductList(dto);
         return products.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
