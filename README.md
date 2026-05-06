@@ -1,42 +1,52 @@
 # spring-data-jpa
-Простой пример для изучающих Spring Data JPA
 
-## Прежде чем начать
-
-Приложение взаимодействует с базой данных PostrgeSQL    
-Она должна быть запущена.    
-Если на компьютере есть `doker` то это можно сделать командой    
-```
-docker run -d  -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 postgres
-```
-если нет докера, то установить базу данных локально и запустить средствами операционной системы    
-
-Проверить, что база работает.    
-Если есть `telnet` то просто проверить открытый порт
-```
-telnet localhost 5432
-```
-или проверить стандартным клиентом
-```
-psql -U postgres -h localhost
-```
-
-Кроме этого на компьютере должно быть установлено
+## Prerequisits
 
 - Java 25
+- java language server
+- ollama 0.21.2
+- qwen2.5-coder:14b
+- nvim 0.13.0 with plugins
 
-## Построить приложение
-```
-./gradlew clean build
-```
-Если построилось удачно, то запустить приложение
-```
-./gradlew bootRun
+```lua
+vim.pack.add({
+    { src = 'https://github.com/neovim/nvim-lspconfig' },
+    { src = 'https://github.com/nvim-tree/nvim-tree.lua' },
+    { src = "https://www.github.com/nvim-lua/plenary.nvim" },
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+    { src = "https://www.github.com/olimorris/codecompanion.nvim" },
+})
 ```
 
-Приложение соединится с базой, создаст таблицы `flyway_schema_history` и `users`,   
-заполнит таблицу `users` данными и выведет ее содержимое на консоль
+## How to create project from scratch
 
-Для создания таблицы и заполнения ее даными используется Flyway    
-Для выполнения запросов к базе используется Spring Data JPA    
-Код снабжен поясняющими комментариями для облегчения понимания    
+- open file 001.md in nvim
+- open codecompanion chat `:CodeCompanionChat`
+- write #{buffer} <ESC><CR>
+- get response:
+
+## CodeCompanion (Ollama)
+
+To create a Maven Java Spring Boot application using the `spring-initializr` command with the specified dependencies, you can use the following command:
+
+```bash
+curl https://start.spring.io/starter.zip -d "type=maven-project" -d "language=java" -d "bootVersion=4.0.6" -d "baseDir=spring-data-jpa" -d "groupId=com.example" -d "artifactId=spring-data-jpa" -d "name=spring-data-jpa" -d "description=Demo project for Spring Data JPA" -d "packageName=com.example.springdatajpa" -d "packaging=jar" -d "javaVersion=17" -d "dependencies=jpa,flyway,h2,lombok" -o spring-data-jpa.zip
+```
+
+Check it works
+```
+./mvnw package
+```
+Then add to context 002.md, 003.md etc
+and follow AI advices
+
+When project done, run it as
+```
+./mvnw spring-boot:run
+```
+and verify it works with
+```
+curl http://localhost:8080/users
+```
+
+
